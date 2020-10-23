@@ -35,7 +35,7 @@ function top(fun, a, next){
 			a = m;
 		}
 		else{
-			b = n;
+			b = m;
 		}
 	}
 	return [a, b];

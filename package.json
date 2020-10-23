@@ -1,0 +1,22 @@
+{
+  "name": "@grunmouse/binary",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grunmouse/binary.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grunmouse/binary/issues"
+  },
+  "homepage": "https://github.com/grunmouse/binary#readme",
+  "devDependencies": {
+    "jsverify": "^0.8.4"
+  }
+}
