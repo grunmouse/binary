@@ -10,10 +10,10 @@ const {
  */
 function accuracy(value){
 	let {
-		exp
+		exp,
+		offsetExp
 	} = decompFloat64(value);
-	
-	let acc = makeFloat64(1, exp);
+	let acc = makeFloat64(1n, exp);
 	
 	return acc;
 }

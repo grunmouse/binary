@@ -24,8 +24,8 @@ function round(M, s){
 	let val = M ^ (M & maskS); //Отбросили дробную часть
 	
 	//val <= M <= val+unit
-	
-	if(M & half === half){
+
+	if((M & half) === half){
 		//Дробь - не меньше половины
 		if(M & maskL === 0){
 			//Дробь строго равна половине - делаем округление до чётного

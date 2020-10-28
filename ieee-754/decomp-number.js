@@ -68,7 +68,7 @@
 const bigint = require('../bigint/index.js');
  
 const DENOMINATOR = 1n<<52n;
-const OFFSET = 1n<<10n - 1n;
+const OFFSET = (1n<<10n) - 1n;
 
 const EXP_OFFSET = 52n;
 const SIGN_OFFSET = 63n;
@@ -104,7 +104,7 @@ function decompFloat64(number){
 	
 	let exp = X - OFFSET + BigInt(isSubnormal);
 	
-	let sizedMant = isSubnormal ? M : M + DENOMINATOR; //V*2**52
+	let sizedMant = (isZero || isSubnormal) ? M : M + DENOMINATOR; //V*2**52
 	
 	return {
 		sign:s,
@@ -138,6 +138,10 @@ function packFloat64(modMant, offsetExp, sign){
 }
 
 function makeFloat64(sizedMant, exp, sign){
+	if(sizedMant === 0n){
+		return 0;
+	}
+	
 	let imant = bigint.ilog2(sizedMant);
 	
 	let offset = 52n - imant;
@@ -145,7 +149,7 @@ function makeFloat64(sizedMant, exp, sign){
 	if(offset !== 0n){
 		sizedMant = bigint.roundAndShift(sizedMant, offset);
 		
-		exp = exp + offset;
+		exp = exp - offset;
 	}
 	
 	//Теперь у нас есть нормализованная пара sizedMant,exp

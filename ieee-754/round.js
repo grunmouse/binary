@@ -1,11 +1,11 @@
 const {
 	decompFloat64,
-	packFloat64
+	packFloat64,
 	DENOMINATOR,
 	MANT_MASK
 } = require('./decomp-number.js');
 
-const bigint = require('../bigint-helper/index.js');
+const bigint = require('../bigint/index.js');
 
 /**
  * Округляет до двоичной степени s
@@ -30,11 +30,11 @@ function round(x, s){
 		if(m>=DENOMINATOR){
 			//Появилась единица
 			m = m & MANT_MASK;
-			return packFloat64(m, 1, sign);
+			return packFloat64(m, 1n, sign);
 		}
 		else{
 			//Число осталось денормализованным
-			return packFloat64(m, 0, sign);
+			return packFloat64(m, 0n, sign);
 		}
 	}
 	else{
@@ -42,7 +42,7 @@ function round(x, s){
 		if(m>=DENOMINATOR*2){
 			//Целая часть больше 1
 			m = m >> 1n;
-			return packFloat64(m & MANT_MASK, offsetExp+1, sign);
+			return packFloat64(m & MANT_MASK, offsetExp+1n, sign);
 		}
 		else{
 			//Число осталось в старых пределах
