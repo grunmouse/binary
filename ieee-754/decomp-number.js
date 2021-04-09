@@ -125,6 +125,12 @@ function decompFloat64(number){
 	
 }
 
+/**
+ * Создаёт значение из исходных данных
+ * @param modMant - остаток мантиссы
+ * @param offsetExp - смещённая экспонента
+ * @param sign - бит знака
+ */
 function packFloat64(modMant, offsetExp, sign){
 	const M = BigInt(modMant), X = BigInt(offsetExp), s = BigInt(sign||0);
 	
@@ -137,6 +143,12 @@ function packFloat64(modMant, offsetExp, sign){
 	return value;
 }
 
+/**
+ * Создаёт значение из исходных данных
+ * @param sizedMant - масштабированная мантисса
+ * @param exp - значение двоичной экспоненты
+ * @param sign - бит знака
+ */
 function makeFloat64(sizedMant, exp, sign){
 	if(sizedMant === 0n){
 		return 0;
@@ -178,6 +190,11 @@ function makeFloat64(sizedMant, exp, sign){
 	}
 }
 
+/**
+ * Проверяет, может ли число быть точно представлено
+ * @param sizedMant - масштабированная мантисса
+ * @param exp - значение двоичной экспоненты
+ */
 function isPrec(sizedMant, exp){
 	let imant = bigint.ilog2(sizedMant);
 	
