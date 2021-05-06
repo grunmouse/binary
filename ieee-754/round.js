@@ -39,7 +39,7 @@ function round(x, s){
 	}
 	else{
 		let m = bigint.round(modMant, exp-s);
-		if(m>=DENOMINATOR*2){
+		if(m>=DENOMINATOR*2n){
 			//Целая часть больше 1
 			m = m >> 1n;
 			return packFloat64(m & MANT_MASK, offsetExp+1n, sign);
