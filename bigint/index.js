@@ -1,4 +1,5 @@
 //let c = 1024n**3n -1n; //Предельный размер BigInt
+//let val = 1n<<c; //Предельное значение BigInt
 //Array.from({length:16}, ()=>(1n<<c)); //Предел разрешённой памяти
 
 const round = require('./round.js');

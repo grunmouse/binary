@@ -72,6 +72,21 @@ function flagCount(value){
 }
 
 /**
+ * Возвращает массив позиций единичных битов числа
+ */
+function flagNumbers(value){
+	let r = [], i=0n;
+	while(value){
+		if(value & 1n){
+			r.push(i);
+		}
+		value = value>>1n;
+		++i;
+	}
+	return r;
+}
+
+/**
  * Для числа value возвращает ближайшее большее число с тем же количеством единичных битов
  * @param {BigInt} value
  * @return {BigInt}
@@ -82,10 +97,40 @@ function nextEqFlag(value){
 	return value + (1n<<lz) + ((1n<<f)-1n);
 }
 
+/**
+ * Фильтрует из массива значения, не являющиеся сдвигом друг друга
+ * @param values : Array<BigInt>
+ */
+function uniqueShift(values){
+	values = values.slice(0);
+	
+	values.sort((a,b)=>(Number(a-b)));
+	const max = values[values.length-1];
+	const result = [], set = new Set();
+	
+	for(let val of values){
+		if(!set.has(val)){
+			result.push(val);
+			if(val == 0n){
+				set.add(val);
+			}
+			else{
+				for(; val <= max; val <<= 1n){
+					set.add(val);
+				}
+			}
+		}
+	}
+	
+	return result;
+}
 
 module.exports = {
 	lowerZeroCount,
 	lowerFlagCount,
 	flagCount,
-	nextEqFlag
+	flagNumbers,
+	nextEqFlag,
+	
+	uniqueShift
 };
