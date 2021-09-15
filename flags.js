@@ -125,12 +125,51 @@ function uniqueShift(values){
 	return result;
 }
 
+/**
+ * Циклически сдвигает влево значение, полагая его длину равным size
+ * @param size - длина в битах
+ * @param value - значение
+ * @param step - величина сдвига (отрицательное значение приведёт к сдвигу вправо)
+ */
+function rotate(size, value, step){
+	const mask = (1n<<size) -1n;
+	if(step>0n){
+		let val = value << step;
+		let mod = val & mask;
+		let over = val >> size;
+		value = mod | over;
+	}
+	else if(step<0n){
+		let modMask = 1n<<(-step-1n);
+		let over = (value & modMask) << size;
+		let val = value | over;
+		value = val >> (-step);
+	}
+	return value;
+}
+
+function allRot(size, value){
+	let result = [];
+	let mask = (1n<<size) - 1n;
+	let field = value | (value<<size); //Удвоенное битовое поле
+	
+	for(let i=0n; i<size; ++i){
+		let item = (field >> i) & mask;
+		result.push(item);
+	}
+	return result;
+}
+
+
 module.exports = {
 	lowerZeroCount,
 	lowerFlagCount,
 	flagCount,
 	flagNumbers,
 	nextEqFlag,
+	
+	rotate,
+	allRot,
 	
 	uniqueShift
 };
