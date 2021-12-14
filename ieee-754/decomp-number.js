@@ -106,6 +106,8 @@ function decompFloat64(number){
 	
 	let sizedMant = (isZero || isSubnormal) ? M : M + DENOMINATOR; //V*2**52
 	
+	let sizedExp = isSubnormal ? -1074n : exp-52n; //Экспонента для масштабированной мантиссы abs(V) = sizedMant*2**sizeExp
+	
 	return {
 		sign:s,
 		offsetExp:X,
@@ -113,6 +115,7 @@ function decompFloat64(number){
 		
 		exp,
 		sizedMant,
+		sizedExp,
 		
 		isZero,
 		isSpecial,

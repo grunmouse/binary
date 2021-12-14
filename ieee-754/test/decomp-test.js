@@ -45,6 +45,22 @@ describe('decomp', ()=>{
 		assert.equal(makeFloat64(0n, 0n, 0n), 0);
 	});
 	
+	it('make 1/2', ()=>{
+		const {
+			modMant,
+			offsetExp,
+			sign,
+			sizedMant,
+			sizedExp,
+			exp
+		} = decompFloat64(0.5);
+		
+		assert.equal(makeFloat64(sizedMant, exp, sign), 0.5);
+		let nom = [1n,-1n][sign]*sizedMant;
+		let denom = 2n**(-sizedExp);
+		assert.equal(Number(nom)/Number(denom), 0.5);
+	});
+	
 	jsc.property('decomp & make', 'number', 'nat', (val, m)=>{
 		
 		m = m || 1;
