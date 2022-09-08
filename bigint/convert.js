@@ -1,15 +1,19 @@
 
 function fromBuffer(buffer){
-	let arr = new BigUint64Array(buffer);
+	const len = buffer.byteLength;
+	const dv = new DataView(buffer);
 	
 	let val = 0n;
-	for(let i = arr.length; i--;){
-		val = (val<<64n) | arr[i];
+	for(let offset = (len-1) & (!7); offset >=0; offset-=8){
+		val = (val<<64n) | dv.getBigUint64(offset, true);
 	}
 	
 	return val;
 }
 
+/**
+ * LE
+ */
 function toBuffer(value, size){
 	let arr = [];
 	const mask = 0xFFFFFFFFFFFFFFFFn;
@@ -19,12 +23,16 @@ function toBuffer(value, size){
 		value = value >> 64n;
 	}
 	
-	size = size || arr.length;
+	size = size || arr.length*8;
 
-	let brr = new BigUint64Array(size);
-	brr.set(arr, 0);
+	const buffer = new ArrayBuffer(size);
+	const dv = new DataView(buffer);
+	arr.forEach((value, i)=>{
+		let offset = i<<3;
+		dv.setBigUint64(offset, value, true);
+	});
 	
-	return brr.buffer;
+	return buffer;
 }
 
 module.exports = {

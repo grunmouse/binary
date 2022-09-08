@@ -1,6 +1,6 @@
 const {top, vilka, find} = require('../service.js');
 /**
- * Возвращает число x, такое что 2**x >= value
+ * Возвращает наименьшее целое x, такое что 2**x >= value
  */
 function over2(value){
 	if(value < 2n){
@@ -17,6 +17,9 @@ function over2(value){
 	}
 }
 
+/**
+ * Возвращает наибольшее целое x, такое что 2**x <= value
+ */
 function ilog2(value){
 	if(value === 0n){
 		throw new RangeError(`Logariphm of 0 is not exists`);
