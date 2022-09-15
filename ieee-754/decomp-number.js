@@ -76,9 +76,26 @@ const EXP_FLAG = 0x7FFn; //Флаги, длиной как экспонента
 const EXP_MASK = EXP_FLAG<<EXP_OFFSET;
 const MANT_MASK = DENOMINATOR-1n;
 
+
+function float2bigint(number){
+	const buffer = new ArrayBuffer(8);
+	const dv = new DataView(buffer);
+	dv.setFloat64(0, number, true);
+	let result = dv.getBigUint64(0, true);
+	return result;
+}
+
+function bigint2float(code){
+	const buffer = new ArrayBuffer(8);
+	const dv = new DataView(buffer);
+	dv.setBigUint64(0, code, true);
+	let result = dv.getFloat64(0, true);
+	return result;
+}
+
 function decompFloat64(number){
 	
-	let [code] = new BigUint64Array(new Float64Array([number]).buffer);
+	let code = float2bigint(number);
 	let s = code>>SIGN_OFFSET;
 	let X = (code & EXP_MASK)>>EXP_OFFSET;
 	let M = (code & MANT_MASK);
@@ -139,9 +156,7 @@ function packFloat64(modMant, offsetExp, sign){
 	
 	let code = (s<<SIGN_OFFSET) | (X<<EXP_OFFSET) | M;
 	
-	let buffer = new BigUint64Array([code]).buffer;
-	
-	let [value] = new Float64Array(buffer);
+	let value = bigint2float(code);
 	
 	return value;
 }

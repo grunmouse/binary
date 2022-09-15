@@ -4,8 +4,8 @@ function fromBuffer(buffer){
 	const dv = new DataView(buffer);
 	
 	let val = 0n;
-	for(let offset = (len-1) & (!7); offset >=0; offset-=8){
-		val = (val<<64n) | dv.getBigUint64(offset, true);
+	for(let offset = (len-1); offset >=0; --offset){
+		val = (val<<8n) | BigInt(dv.getUint8(offset));
 	}
 	
 	return val;
@@ -16,20 +16,19 @@ function fromBuffer(buffer){
  */
 function toBuffer(value, size){
 	let arr = [];
-	const mask = 0xFFFFFFFFFFFFFFFFn;
+	const mask = 0xFFn;
 	
 	for(let i=0; value; ++i){
 		arr[i] = value & mask;
-		value = value >> 64n;
+		value = value >> 8n;
 	}
 	
-	size = size || arr.length*8;
+	size = size || arr.length;
 
 	const buffer = new ArrayBuffer(size);
 	const dv = new DataView(buffer);
 	arr.forEach((value, i)=>{
-		let offset = i<<3;
-		dv.setBigUint64(offset, value, true);
+		dv.setUint8(i, Number(value));
 	});
 	
 	return buffer;
