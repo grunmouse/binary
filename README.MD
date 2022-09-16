@@ -136,7 +136,7 @@ isSpecial = isInfinity || isNaN
 @param value : Number\
 @return BigInt
 
-### float64.pack(modMant, offsetExp, sign){
+### float64.pack(modMant, offsetExp, sign)
 
 Создаёт значение из исходных данных
 
@@ -145,7 +145,7 @@ isSpecial = isInfinity || isNaN
 @param sign : (BigInt|Number|Null) - бит знака (по умолчанию =0n)
 @return Number
 
-### float64.make(sizedMant, exp, sign){
+### float64.make(sizedMant, exp, sign)
 
 Создаёт значение из исходных данных.\
 Если число нельзя представить точно - произойдёт округление мантиссы методом bigint.round.\
@@ -154,6 +154,13 @@ isSpecial = isInfinity || isNaN
 @param sizedMant - масштабированная мантисса
 @param exp - значение двоичной экспоненты
 @param sign - бит знака
+
+### float64.fromIndex(index)
+
+Создаёт значение по его index
+
+@param index : BigInt\
+@return Number
 
 ### float64.ilog2(value)
 Возвращает наибольшее целое x, такое что 2**x <= value
