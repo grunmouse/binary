@@ -7,7 +7,7 @@
  */
 function round(M, s){
 	s = BigInt(s);
-	
+	M = BigInt(M);
 	if(s<=0n){
 		return M;
 	}
@@ -27,9 +27,9 @@ function round(M, s){
 
 	if((M & half) === half){
 		//Дробь - не меньше половины
-		if(M & maskL === 0){
+		if((M & maskL) === 0n){
 			//Дробь строго равна половине - делаем округление до чётного
-			if(M & unit === unit){
+			if((M & unit) === unit){
 				val += unit;
 			}
 		}

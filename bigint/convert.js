@@ -1,4 +1,6 @@
-
+/**
+ * LE
+ */
 function fromBuffer(buffer){
 	const len = buffer.byteLength;
 	const dv = new DataView(buffer);

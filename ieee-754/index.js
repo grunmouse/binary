@@ -12,6 +12,7 @@ module.exports = {
 	decomp:decompFloat64,
 	pack:packFloat64,
 	make:makeFloat64,
+	...require('./ilog2.js'),
 	round,
 	accuracy
 }

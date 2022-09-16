@@ -245,6 +245,8 @@ function isPrec(sizedMant, exp){
 }
 
 module.exports = {
+	bigint2float,
+	float2bigint,
 	decompFloat64,
 	packFloat64,
 	makeFloat64,
