@@ -4,7 +4,9 @@ const jsc = require('jsverify');
 const {
 	decompFloat64,
 	packFloat64,
-	makeFloat64
+	makeFloat64,
+	getIndex,
+	fromIndex
 } = require('../decomp-number.js');
 
 
@@ -78,4 +80,21 @@ describe('decomp', ()=>{
 		
 		return true;
 	});
+	
+	jsc.property('getIndex <=> fromIndex', 'number', 'nat', (val, m)=>{
+		m = m || 1;
+		
+		val *= m;
+		
+		let index = getIndex(val);
+		
+		const decomp = decompFloat64(val);
+		
+		assert.equal(decomp.index, index, 'index');
+		
+		assert.equal(fromIndex(index), val, 'fromIndex');
+		
+		return true;
+	});	
+	
 });

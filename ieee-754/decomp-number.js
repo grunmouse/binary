@@ -75,6 +75,7 @@ const SIGN_OFFSET = 63n;
 const EXP_FLAG = 0x7FFn; //Флаги, длиной как экспонента
 const EXP_MASK = EXP_FLAG<<EXP_OFFSET;
 const MANT_MASK = DENOMINATOR-1n;
+const NUM_MASK = EXP_MASK | MANT_MASK;
 
 
 function float2bigint(number){
@@ -99,7 +100,7 @@ function decompFloat64(number){
 	let s = code>>SIGN_OFFSET;
 	let X = (code & EXP_MASK)>>EXP_OFFSET;
 	let M = (code & MANT_MASK);
-	
+	let num = (code & NUM_MASK); //Число, отсортированное так же, как значение (с поправкой на знак)
 	
 	let isXZero = X===0n;
 	let isXFlag = X === EXP_FLAG;
@@ -125,6 +126,10 @@ function decompFloat64(number){
 	
 	let sizedExp = isSubnormal ? -1074n : exp-52n; //Экспонента для масштабированной мантиссы abs(V) = sizedMant*2**sizeExp
 	
+	if(isMinus){
+		num = -num; //Поправка порядка следования
+	}
+	
 	return {
 		sign:s,
 		offsetExp:X,
@@ -133,6 +138,8 @@ function decompFloat64(number){
 		exp,
 		sizedMant,
 		sizedExp,
+		
+		index:num,
 		
 		isZero,
 		isSpecial,
@@ -244,12 +251,47 @@ function isPrec(sizedMant, exp){
 
 }
 
+/**
+ * @param index : BigInt - номер числа
+ */
+function fromIndex(index){
+	let sign, num;
+	if(index<0){
+		sign = 1n;
+		num = -index;
+	}
+	else{
+		sign = 0n;
+		num = index;
+	}
+	
+	let code = num | (sign << SIGN_OFFSET);
+	
+	return bigint2float(code);
+}
+
+function getIndex(value){
+	
+	let code = float2bigint(value);
+	let s = code>>SIGN_OFFSET;
+	let num = (code & NUM_MASK); //Число, отсортированное так же, как значение (с поправкой на знак)
+
+	if(s === 1n){
+		num = -num; //Поправка порядка следования
+	}
+	
+	return num;
+}
+
 module.exports = {
 	bigint2float,
 	float2bigint,
 	decompFloat64,
 	packFloat64,
 	makeFloat64,
+	fromIndex,
+	getIndex,
+	isPrec,
 	DENOMINATOR,
 	MANT_MASK
 };
