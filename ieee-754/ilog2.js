@@ -22,7 +22,7 @@ function ilog2(x){
 
 function over2(x){
 	let ilog = ilog2(x);
-	let y = 1<<<ilog;
+	let y = 1<<ilog;
 	if(x>y){
 		ilog++;
 	}
