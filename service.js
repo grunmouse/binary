@@ -1,6 +1,6 @@
 /**
  * Сужает вилку a,b при условии b-a>=1 && fun(a) && !fun(b)
- * @param Function<BigInt, Boolean> fun
+ * @param Function<BigInt, Boolean> fun - целевая функция, невозрастающая на [a, b]
  * @param BigInt a - нижняя граница вилки, такая, что fun(a)==true
  * @param BigInt b - верхняя граница вилки, такая, что b>a && fun(b)==false
  * @return [a, b] - предельно узкая вилка
@@ -25,12 +25,26 @@ function vilka(fun, a, b){
  * @param Function<BigInt, Boolean> fun
  * @param BigInt a - начальное значение нижнего предела
  * @param Function<BigInt, BigInt> next - функция увеличения значения
- * @return {a, b} - начальная вилка
+ * @return [a, b] - начальная вилка
  */
 function top(fun, a, next){
 	let m, b;
-	while(!b){
+	while(b==null){
 		m = next(a);
+		if(fun(m)){
+			a = m;
+		}
+		else{
+			b = m;
+		}
+	}
+	return [a, b];
+}
+
+function bottom(fun, b, prev){
+	let m, a;
+	while(a==null){
+		m = prev(b);
 		if(fun(m)){
 			a = m;
 		}

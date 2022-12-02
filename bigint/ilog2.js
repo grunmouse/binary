@@ -21,8 +21,8 @@ function over2(value){
  * Возвращает наибольшее целое x, такое что 2**x <= value
  */
 function ilog2(value){
-	if(value === 0n){
-		throw new RangeError(`Logariphm of 0 is not exists`);
+	if(value <= 0n){
+		throw new RangeError(`Logariphm of ${value} is not exists`);
 	}
 	else if(value===1n){
 		return 0n;
