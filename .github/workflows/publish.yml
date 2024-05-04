@@ -14,7 +14,7 @@ jobs:
           node-version: '21.x'
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies and build 🔧
-        run: npm i && npm ci
+        run: npm i && npm config set access public && npm ci
       - name: Publish package on NPM 📦
         run: npm publish
         env:
