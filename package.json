@@ -19,6 +19,9 @@
   "bugs": {
     "url": "https://github.com/grunmouse/binary/issues"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@grunmouse"
+  },
   "homepage": "https://github.com/grunmouse/binary#readme",
   "devDependencies": {
     "jsverify": "^0.8.4",

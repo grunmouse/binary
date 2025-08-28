@@ -5,9 +5,12 @@ const flags = require('./flags.js');
 
 const zOrder = require('./z-order.js');
 
+const service = require('./service.js');
+
 module.exports = {
 	flags,
 	bigint,
 	float64,
-	zOrder
+	zOrder,
+	service
 }
